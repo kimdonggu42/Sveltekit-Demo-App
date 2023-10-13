@@ -6,11 +6,13 @@
 <div class="w-[800px] h-[600px] border border-solid border-[#848484] rounded-xl">
 	<header class="flex items-center h-[75px] bg-white rounded-t-xl">
 		<div class="basis-[30%] pl-[20px]">
-			<button
-				class="flex items-center gap-x-[5px] px-[20px] py-[15px] bg-[#f7f7f5] rounded-lg shadow-lg"
-				><img src={addIcon} alt="add_icon" />
-				<div class="text-[#ea541d]">New Reservation</div>
-			</button>
+			<a href="/new">
+				<button
+					class="flex items-center gap-x-[5px] px-[20px] py-[15px] bg-[#f7f7f5] rounded-lg shadow-lg"
+					><img src={addIcon} alt="add_icon" />
+					<div class="text-[#ea541d]">New Reservation</div>
+				</button>
+			</a>
 		</div>
 		<div class="flex justify-center basis-[40%]">
 			<div class="text-[25px] text-[#6b6460]">Reservation</div>
