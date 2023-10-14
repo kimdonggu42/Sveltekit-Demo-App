@@ -1,6 +1,11 @@
 <script>
 	import addIcon from '../lib/icons/add.svg';
 	import closeIcon from '../lib/icons/close.svg';
+	import ReservationCard from '../components/ReservationCard.svelte';
+
+	export let reservations;
+
+	console.log(reservations);
 </script>
 
 <div class="w-[800px] h-[600px] border border-solid border-[#848484] rounded-xl">
@@ -23,5 +28,7 @@
 			</button>
 		</div>
 	</header>
-	<div class="bg-[#f5f5f3] h-[calc(100%-75px)] rounded-b-xl" />
+	<div class="bg-[#f5f5f3] h-[calc(100%-75px)] rounded-b-xl">
+		<ReservationCard {reservations} />
+	</div>
 </div>
