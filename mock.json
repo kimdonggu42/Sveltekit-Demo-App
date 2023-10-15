@@ -3,47 +3,62 @@
 		{
 			"id": 1,
 			"name": "David",
-			"phnoe": "012-345-6789",
+			"phone": "012-345-6789",
 			"date": "May 10",
-			"hour": "02",
-			"minute": "00",
-			"meridiem": "PM"
+			"hour": 12,
+			"minute": 50,
+			"meridiem": "AM",
+			"guests": 4,
+			"table": ["Table 7 ⋅ Floor 1", "Table 8 ⋅ Floor 1"],
+			"note": "Note"
 		},
 		{
 			"id": 2,
-			"name": "David",
-			"phnoe": "012-345-6789",
+			"name": "Jason",
+			"phone": "012-345-6789",
 			"date": "May 10",
-			"hour": "02",
-			"minute": "00",
-			"meridiem": "PM"
+			"hour": 2,
+			"minute": 0,
+			"meridiem": "PM",
+			"guests": 4,
+			"table": ["Table 7 ⋅ Floor 1", "Table 8 ⋅ Floor 1"],
+			"note": "Note"
 		},
 		{
 			"id": 3,
-			"name": "David",
-			"phnoe": "012-345-6789",
+			"name": "Olivia",
+			"phone": "012-345-6789",
 			"date": "May 10",
-			"hour": "02",
-			"minute": "00",
-			"meridiem": "PM"
+			"hour": 2,
+			"minute": 0,
+			"meridiem": "PM",
+			"guests": 4,
+			"table": ["Table 7 ⋅ Floor 1", "Table 8 ⋅ Floor 1"],
+			"note": "Note"
 		},
 		{
 			"id": 4,
-			"name": "David",
-			"phnoe": "012-345-6789",
+			"name": "Mary",
+			"phone": "012-345-6789",
 			"date": "May 10",
-			"hour": "02",
-			"minute": "00",
-			"meridiem": "PM"
+			"hour": 2,
+			"minute": 0,
+			"meridiem": "PM",
+			"guests": 4,
+			"table": ["Table 7 ⋅ Floor 1", "Table 8 ⋅ Floor 1"],
+			"note": "Note"
 		},
 		{
 			"id": 5,
-			"name": "David",
-			"phnoe": "012-345-6789",
+			"name": "Ash",
+			"phone": "012-345-6789",
 			"date": "May 10",
-			"hour": "02",
-			"minute": "00",
-			"meridiem": "PM"
+			"hour": 2,
+			"minute": 0,
+			"meridiem": "PM",
+			"guests": 4,
+			"table": ["Table 7 ⋅ Floor 1", "Table 8 ⋅ Floor 1"],
+			"note": "Note"
 		}
 	]
 }

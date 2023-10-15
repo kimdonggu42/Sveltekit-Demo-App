@@ -68,6 +68,6 @@
 				placeholder="Add Note..."
 			/>
 		</div>
-		<button type="submit" class="text-white py-[20px] bg-[#df4c19] rounded-lg">Save </button>
+		<button type="submit" class="text-white py-[20px] bg-primary rounded-lg">Save </button>
 	</form>
 </div>

@@ -2,10 +2,13 @@
 	import addIcon from '../lib/icons/add.svg';
 	import closeIcon from '../lib/icons/close.svg';
 	import ReservationCard from '../components/ReservationCard.svelte';
+	import { reservationsStore } from '../stores/reservations';
 
-	export let reservations;
+	let reservations;
 
-	console.log(reservations);
+	reservationsStore.subscribe((value) => {
+		reservations = value;
+	});
 </script>
 
 <div class="w-[800px] h-[600px] border border-solid border-[#848484] rounded-xl">
@@ -15,7 +18,7 @@
 				<button
 					class="flex items-center gap-x-[5px] px-[20px] py-[15px] bg-[#f7f7f5] rounded-lg shadow-lg"
 					><img src={addIcon} alt="add_icon" />
-					<div class="text-[#ea541d]">New Reservation</div>
+					<div class="text-primary">New Reservation</div>
 				</button>
 			</a>
 		</div>
@@ -28,7 +31,11 @@
 			</button>
 		</div>
 	</header>
-	<div class="bg-[#f5f5f3] h-[calc(100%-75px)] rounded-b-xl">
-		<ReservationCard {reservations} />
-	</div>
+	<ul
+		class="flex flex-wrap p-[20px] gap-[14px] bg-[#f5f5f3] h-[calc(100%-75px)] rounded-b-xl overflow-auto"
+	>
+		{#each reservations as reservation}
+			<ReservationCard {reservation} />
+		{/each}
+	</ul>
 </div>
