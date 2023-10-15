@@ -15,8 +15,20 @@ const createReservationsStore = () => {
   };
   loadReservations();
 
+  const deleteReservation = async (reservationId) => {
+    try {
+      await axios.delete(`http://localhost:3001/reservation/${reservationId}`);
+      await loadReservations();
+    } catch (error) {
+      console.error("예약 삭제 중 오류가 발생했습니다:", error);
+    }
+  };
+
+
+
   return {
-    subscribe
+    subscribe,
+    deleteReservation
   };
 };
 

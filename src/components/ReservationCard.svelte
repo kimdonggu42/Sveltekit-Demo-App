@@ -1,4 +1,5 @@
 <script>
+	import { reservationsStore } from '../stores/reservations';
 	import trashIcon from '../lib/icons/trash.svg';
 	import phoneIcon from '../lib/icons/phone.svg';
 	import eventIcon from '../lib/icons/event_available.svg';
@@ -18,9 +19,13 @@
 			return time;
 		}
 	};
+
+	const handleDeleteReservation = async (reservationId) => {
+		await reservationsStore.deleteReservation(reservationId);
+	};
 </script>
 
-<li class="flex flex-col gap-y-[15px] p-[15px] bg-white rounded-xl shadow-lg">
+<li class="flex flex-col h-fit gap-y-[15px] p-[15px] bg-white rounded-xl shadow-lg">
 	<div class="flex items-center gap-x-[10px]">
 		<div>{reservation.name}</div>
 		<div class="flex items-center gap-x-[2px] px-[10px] py-[5px] shadow-lg bg-[#f7f7f7] rounded-xl">
@@ -52,7 +57,9 @@
 		<img src={editIcon} alt="edit_icon" />
 	</div>
 	<div class="flex items-center gap-x-[10px]">
-		<button class="p-[15px] bg-[#f7f7f5] rounded-lg shadow-lg"
+		<button
+			class="p-[15px] bg-[#f7f7f5] rounded-lg shadow-lg"
+			on:click={handleDeleteReservation(reservation.id)}
 			><img src={trashIcon} alt="trash_icon" /></button
 		>
 		<button class="w-[140px] text-white py-[15px] bg-primary rounded-lg shadow-lg">Seated</button>
