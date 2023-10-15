@@ -1,128 +1,157 @@
 <script>
+	import axios from 'axios';
+	import { onMount } from 'svelte';
+	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
-	import { reservationsStore } from '../../stores/reservations';
+	import { reservationsStore } from '../../../stores/reservations';
 	import {
-		name,
-		phone,
-		guests,
-		tables,
-		note,
-		date,
-		hour,
-		minute,
-		meridiem
-	} from '../../stores/reservationData';
-	import backspaceIcon from '../../lib/icons/keyboard_backspace.svg';
-	import closeIcon from '../../lib/icons/close.svg';
-	import eventIcon from '../../lib/icons/event_available.svg';
-	import minusIcon from '../../lib/icons/math-minus.svg';
-	import plusIcon from '../../lib/icons/math-plus.svg';
-	import arrowDropDown from '../../lib/icons/arrow_drop_down.svg';
+		editName,
+		editPhone,
+		editGuests,
+		editTables,
+		editNote,
+		editDate,
+		editHour,
+		editMinute,
+		editMeridiem
+	} from '../../../stores/reservationData';
+	import backspaceIcon from '../../../lib/icons/keyboard_backspace.svg';
+	import closeIcon from '../../../lib/icons/close.svg';
+	import eventIcon from '../../../lib/icons/event_available.svg';
+	import minusIcon from '../../../lib/icons/math-minus.svg';
+	import plusIcon from '../../../lib/icons/math-plus.svg';
+	import arrowDropDown from '../../../lib/icons/arrow_drop_down.svg';
 
-	let nameValue;
-	let phoneValue;
-	let guestsValue;
-	let tablesValue;
-	let noteValue;
+	const reservationId = $page.params.reservationId;
 
-	let dateValue;
-	let hourValue;
-	let minuteValue;
-	let meridiemValue;
+	let detailDateData;
+
+	let editNameValue;
+	let editPhoneValue;
+	let editGuestsValue;
+	let editTablesValue;
+	let editNoteValue;
+
+	let editDateValue;
+	let editHourValue;
+	let editMinuteValue;
+	let editMeridiemValue;
 
 	let selectTableModalOpen = false;
 
 	const tableList = ['Table 7 ⋅ Floor 1', 'Table 8 ⋅ Floor 1'];
 
-	name.subscribe((value) => {
-		nameValue = value;
+	const getDetailDateData = async () => {
+		try {
+			const res = await axios.get(`http://localhost:3001/reservation/${reservationId}`);
+			detailDateData = res.data;
+			editName.update((date) => (date = detailDateData.name));
+			editPhone.update((date) => (date = detailDateData.phone));
+			editGuests.update((date) => (date = detailDateData.guests));
+			editTables.update((date) => (date = detailDateData.table));
+			editNote.update((date) => (date = detailDateData.note));
+			editDate.update((date) => (date = detailDateData.date));
+			editHour.update((date) => (date = detailDateData.hour));
+			editMinute.update((date) => (date = detailDateData.minute));
+			editMeridiem.update((date) => (date = detailDateData.meridiem));
+		} catch (err) {
+			console.error(err);
+		}
+	};
+
+	onMount(() => {
+		getDetailDateData();
 	});
 
-	phone.subscribe((value) => {
-		phoneValue = value;
+	editName.subscribe((value) => {
+		editNameValue = value;
 	});
 
-	guests.subscribe((value) => {
-		guestsValue = value;
+	editPhone.subscribe((value) => {
+		editPhoneValue = value;
 	});
 
-	tables.subscribe((value) => {
-		tablesValue = value;
+	editGuests.subscribe((value) => {
+		editGuestsValue = value;
 	});
 
-	note.subscribe((value) => {
-		noteValue = value;
+	editTables.subscribe((value) => {
+		editTablesValue = value;
 	});
 
-	date.subscribe((value) => {
-		dateValue = value;
+	editNote.subscribe((value) => {
+		editNoteValue = value;
 	});
 
-	hour.subscribe((value) => {
-		hourValue = value;
+	editDate.subscribe((value) => {
+		editDateValue = value;
 	});
 
-	minute.subscribe((value) => {
-		minuteValue = value;
+	editHour.subscribe((value) => {
+		editHourValue = value;
 	});
 
-	meridiem.subscribe((value) => {
-		meridiemValue = value;
+	editMinute.subscribe((value) => {
+		editMinuteValue = value;
 	});
 
-	const addNewReservation = async (e) => {
-		const newReservation = {
-			id: Math.floor(Math.random() * 100000000) + 1,
-			name: nameValue,
-			phone: phoneValue,
-			date: dateValue,
-			hour: hourValue,
-			minute: minuteValue,
-			meridiem: meridiemValue,
-			guests: guestsValue,
-			table: tablesValue,
-			note: noteValue,
+	editMeridiem.subscribe((value) => {
+		editMeridiemValue = value;
+	});
+
+	const editNewReservation = async (e) => {
+		e.preventDefault();
+		const editReservation = {
+			id: reservationId,
+			name: editNameValue,
+			phone: editPhoneValue,
+			date: editDateValue,
+			hour: editHourValue,
+			minute: editMinuteValue,
+			meridiem: editMeridiemValue,
+			guests: editGuestsValue,
+			table: editTablesValue,
+			note: editNoteValue,
 			seated: false
 		};
-		e.preventDefault();
-		await reservationsStore.postReservation(newReservation);
-		name.set('');
-		phone.set('');
-		guests.set(0);
-		tables.set([]);
-		note.set('');
-		date.set('');
-		hour.set(1);
-		minute.set(0);
-		meridiem.set('AM');
+		await reservationsStore.editReservation(reservationId, editReservation);
+		editName.set('');
+		editPhone.set('');
+		editGuests.set(0);
+		editTables.set([]);
+		editNote.set('');
+		editDate.set('');
+		editHour.set(1);
+		editMinute.set(0);
+		editMeridiem.set('AM');
 		goto('/');
 	};
 
 	const changeName = (e) => {
-		name.set(e.target.value);
+		editName.set(e.target.value);
 	};
 
 	const changePhone = (e) => {
-		phone.set(e.target.value);
+		editPhone.set(e.target.value);
 	};
 
 	const changeNote = (e) => {
-		note.set(e.target.value);
+		editNote.set(e.target.value);
 	};
 
 	const decrementGuests = () => {
-		if (guestsValue > 0) {
-			guests.update((guest) => guest - 1);
+		if (editGuestsValue > 0) {
+			editGuests.update((guest) => guest - 1);
 		}
 	};
 
 	const incrementGuests = () => {
-		guests.update((guest) => guest + 1);
+		editGuests.update((guest) => guest + 1);
 	};
 
 	const addTable = (value) => {
-		if (!tablesValue.includes(value)) {
-			tables.set([...tablesValue, value]);
+		if (!editTablesValue.includes(value)) {
+			editTables.set([...editTablesValue, value]);
 		} else {
 			alert('이미 선택한 테이블입니다.');
 		}
@@ -130,8 +159,10 @@
 
 	const removeTable = (e, tableIndex) => {
 		e.stopPropagation();
-		const filteringTablesValue = tablesValue.filter((value) => value !== tablesValue[tableIndex]);
-		tables.set(filteringTablesValue);
+		const filteringTablesValue = editTablesValue.filter(
+			(value) => value !== editTablesValue[tableIndex]
+		);
+		editTables.set(filteringTablesValue);
 	};
 
 	const openSelectTable = () => {
@@ -145,7 +176,7 @@
 	};
 
 	const moveSelectDatePage = () => {
-		goto('/date');
+		goto(`/date/${reservationId}`);
 	};
 
 	const movePrevPage = () => {
@@ -171,7 +202,7 @@
 	</header>
 	<form
 		class="flex flex-col justify-between bg-white h-[calc(100%-75px)] px-[30px] py-[20px] rounded-b-xl"
-		on:submit={addNewReservation}
+		on:submit={(e) => editNewReservation(e)}
 	>
 		<div class="flex flex-col gap-y-[30px]">
 			<div class="flex items-center gap-x-[20px]">
@@ -179,7 +210,7 @@
 					class="w-full min-h-[50px] px-[20px] border border-solid border-[#b1aaa8] rounded-lg"
 					type="text"
 					placeholder="Name*"
-					bind:value={nameValue}
+					bind:value={editNameValue}
 					on:input={changeName}
 					required
 				/>
@@ -187,7 +218,7 @@
 					class="w-full min-h-[50px] px-[20px] border border-solid border-[#b1aaa8] rounded-lg"
 					type="text"
 					placeholder="Phone*"
-					bind:value={phoneValue}
+					bind:value={editPhoneValue}
 					on:input={changePhone}
 					required
 				/>
@@ -197,21 +228,21 @@
 					on:click={moveSelectDatePage}
 				>
 					<img src={eventIcon} alt="event_icon" />
-					{#if dateValue === ''}
+					{#if editDateValue === ''}
 						<div class="text-[#6b6460]">Select Date</div>
 					{:else}
 						<div class="flex text-[#6b6460]">
 							<div>
-								{dateValue},&nbsp;
+								{editDateValue},&nbsp;
 							</div>
 							<div>
-								{hourValue}:
+								{editHourValue}:
 							</div>
 							<div>
-								{String(minuteValue).padStart(2, '0')}&nbsp;
+								{String(editMinuteValue).padStart(2, '0')}&nbsp;
 							</div>
 							<div>
-								{meridiemValue}
+								{editMeridiemValue}
 							</div>
 						</div>
 					{/if}
@@ -227,7 +258,7 @@
 					>
 						<img src={minusIcon} alt="minus_icon" />
 					</button>
-					<div class="text-[25px] w-[60px] text-center">{guestsValue}</div>
+					<div class="text-[25px] w-[60px] text-center">{editGuestsValue}</div>
 					<button
 						class="p-[10px] bg-[#f7f7f5] rounded-lg shadow-lg"
 						on:click={incrementGuests}
@@ -241,10 +272,10 @@
 						class="flex items-center justify-between px-[15px] h-full relative border border-solid border-[#b1aaa8] rounded-lg"
 					>
 						<ul class="flex gap-x-[10px]">
-							{#if tablesValue.length === 0}
+							{#if editTablesValue.length === 0}
 								<div class="text-[#a7a7a7]">Select Table</div>
 							{/if}
-							{#each tablesValue as table, index}
+							{#each editTablesValue as table, index}
 								<li
 									class="flex items-center gap-x-[10px] text-[12px] px-[10px] py-[5px] bg-[#f5f5f3] rounded-3xl"
 								>
@@ -286,7 +317,7 @@
 				class="p-[20px] border border-solid border-[#b1aaa8] rounded-lg shadow-lg resize-none"
 				rows="7"
 				placeholder="Add Note..."
-				bind:value={noteValue}
+				bind:value={editNoteValue}
 				on:input={changeNote}
 			/>
 		</div>

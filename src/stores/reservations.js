@@ -7,8 +7,7 @@ const createReservationsStore = () => {
   const loadReservations = async () => {
     try {
       const res = await axios.get('http://localhost:3001/reservation');
-      const reservationsData = res.data;
-      set(reservationsData);
+      set(res.data);
     } catch (error) {
       console.error("예약 정보를 가져오는 중 오류가 발생했습니다.", error);
     }
@@ -24,7 +23,16 @@ const createReservationsStore = () => {
     }
   };
 
-  const patchReservation = async (reservationId, updateSeated) => {
+  const editReservation = async (reservationId, editReservation) => {
+    try {
+      await axios.patch(`http://localhost:3001/reservation/${reservationId}`, editReservation);
+      await loadReservations();
+    } catch (error) {
+      console.error("예약 수정 중 오류가 발생했습니다.", error);
+    }
+  };
+
+  const seatedReservation = async (reservationId, updateSeated) => {
     try {
       await axios.patch(`http://localhost:3001/reservation/${reservationId}`, updateSeated);
       await loadReservations();
@@ -45,7 +53,8 @@ const createReservationsStore = () => {
   return {
     subscribe,
     postReservation,
-    patchReservation,
+    editReservation,
+    seatedReservation,
     deleteReservation
   };
 };

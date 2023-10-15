@@ -1,35 +1,59 @@
 <script>
-	import { date, hour, minute, meridiem } from '../../stores/reservationData';
+	import axios from 'axios';
+	import { editDate, editHour, editMinute, editMeridiem } from '../../../stores/reservationData';
 	import { goto } from '$app/navigation';
-	import alarmIcon from '../../lib/icons/alarm_on.svg';
-	import todayIcon from '../../lib/icons/today.svg';
-	import trashIcon from '../../lib/icons/trash.svg';
-	import chevronUp from '../../lib/icons/chevron-up.svg';
-	import chevronDown from '../../lib/icons/chevron-down.svg';
+	import { onMount } from 'svelte';
+	import { page } from '$app/stores';
+	import alarmIcon from '../../../lib/icons/alarm_on.svg';
+	import todayIcon from '../../../lib/icons/today.svg';
+	import trashIcon from '../../../lib/icons/trash.svg';
+	import chevronUp from '../../../lib/icons/chevron-up.svg';
+	import chevronDown from '../../../lib/icons/chevron-down.svg';
 
-	let dateValue;
-	let hourValue;
-	let minuteValue;
-	let meridiemValue;
+	const reservationId = $page.params.reservationId;
+
+	let detailDateData;
+
+	let editDateValue;
+	let editHourValue;
+	let editMinuteValue;
+	let editMeridiemValue;
 
 	let selectDateModalOpen = false;
 
 	const dateList = ['May 10', 'June 20'];
 
-	date.subscribe((value) => {
-		dateValue = value;
+	const getDetailDateData = async () => {
+		try {
+			const res = await axios.get(`http://localhost:3001/reservation/${reservationId}`);
+			detailDateData = res.data;
+			editDate.update((date) => (date = detailDateData.date));
+			editHour.update((date) => (date = detailDateData.hour));
+			editMinute.update((date) => (date = detailDateData.minute));
+			editMeridiem.update((date) => (date = detailDateData.meridiem));
+		} catch (err) {
+			console.error(err);
+		}
+	};
+
+	onMount(() => {
+		getDetailDateData();
 	});
 
-	hour.subscribe((value) => {
-		hourValue = value;
+	editDate.subscribe((value) => {
+		editDateValue = value;
 	});
 
-	minute.subscribe((value) => {
-		minuteValue = value;
+	editHour.subscribe((value) => {
+		editHourValue = value;
 	});
 
-	meridiem.subscribe((value) => {
-		meridiemValue = value;
+	editMinute.subscribe((value) => {
+		editMinuteValue = value;
+	});
+
+	editMeridiem.subscribe((value) => {
+		editMeridiemValue = value;
 	});
 
 	const openSelectDate = () => {
@@ -37,46 +61,46 @@
 	};
 
 	const selectDate = (value) => {
-		date.update((date) => (date = value));
+		editDate.update((date) => (date = value));
 	};
 
 	const hourUp = () => {
-		if (hourValue !== 12) {
-			hour.update((value) => value + 1);
+		if (editHourValue !== 12) {
+			editHour.update((value) => value + 1);
 		} else {
-			hour.update((value) => (value = 1));
+			editHour.update((value) => (value = 1));
 		}
 	};
 
 	const hourDown = () => {
-		if (hourValue !== 1) {
-			hour.update((value) => value - 1);
+		if (editHourValue !== 1) {
+			editHour.update((value) => value - 1);
 		} else {
-			hour.update((value) => (value = 12));
+			editHour.update((value) => (value = 12));
 		}
 	};
 
 	const minuteUp = () => {
-		if (minuteValue !== 59) {
-			minute.update((value) => value + 1);
+		if (editMinute !== 59) {
+			editMinute.update((value) => value + 1);
 		} else {
-			minute.update((value) => (value = 0));
+			editMinute.update((value) => (value = 0));
 		}
 	};
 
 	const minuteDown = () => {
-		if (minuteValue !== 0) {
-			minute.update((value) => value - 1);
+		if (editMinuteValue !== 0) {
+			editMinute.update((value) => value - 1);
 		} else {
-			minute.update((value) => (value = 59));
+			editMinute.update((value) => (value = 59));
 		}
 	};
 
 	const meridiemChange = () => {
-		if (meridiemValue === 'AM') {
-			meridiem.update((value) => (value = 'PM'));
+		if (editMeridiemValue === 'AM') {
+			editMeridiem.update((value) => (value = 'PM'));
 		} else {
-			meridiem.update((value) => (value = 'AM'));
+			editMeridiem.update((value) => (value = 'AM'));
 		}
 	};
 
@@ -93,14 +117,14 @@
 	};
 
 	const resetDateAndTime = () => {
-		date.set('');
-		hour.set(1);
-		minute.set(0);
-		meridiem.set('AM');
+		editDate.set('');
+		editHour.set(1);
+		editMinute.set(0);
+		editMeridiem.set('AM');
 	};
 
 	const moveNewReservationPage = () => {
-		goto('/new');
+		goto(`/edit/${reservationId}`);
 	};
 </script>
 
@@ -112,8 +136,8 @@
 		<div
 			class="flex items-center w-full px-[25px] min-h-[60px] border border-solid border-[#b1aaa8] rounded-lg"
 		>
-			{hourValue} : {String(minuteValue).padStart(2, '0')}
-			{meridiemValue}
+			{editHourValue} : {String(editMinuteValue).padStart(2, '0')}
+			{editMeridiemValue}
 		</div>
 	</div>
 	<div class="flex items-center gap-x-[10px]">
@@ -125,10 +149,10 @@
 			role="button"
 			tabindex="0"
 		>
-			{#if dateValue === ''}
+			{#if editDateValue === ''}
 				<div class="text-[#a7a7a7]">Select Date</div>
 			{/if}
-			{dateValue}
+			{editDateValue}
 			{#if selectDateModalOpen}
 				<div
 					class="w-full absolute top-[100%] left-0 border border-solid border-[#b1aaa8] rounded-lg bg-white"
@@ -154,7 +178,7 @@
 				<button on:click={hourUp}>
 					<img src={chevronUp} alt="chevronUp_icon" />
 				</button>
-				<div class="text-[30px]">{String(hourValue).padStart(2, '0')}</div>
+				<div class="text-[30px]">{String(editHourValue).padStart(2, '0')}</div>
 				<button on:click={hourDown}>
 					<img src={chevronDown} alt="chevronDown_icon" />
 				</button>
@@ -164,7 +188,7 @@
 				<button on:click={minuteUp}>
 					<img src={chevronUp} alt="chevronUp_icon" />
 				</button>
-				<div class="text-[30px]">{String(minuteValue).padStart(2, '0')}</div>
+				<div class="text-[30px]">{String(editMinuteValue).padStart(2, '0')}</div>
 				<button on:click={minuteDown}>
 					<img src={chevronDown} alt="chevronDown_icon" />
 				</button>
@@ -174,7 +198,7 @@
 			<button on:click={meridiemChange}>
 				<img src={chevronUp} alt="chevronUp_icon" />
 			</button>
-			<div class="text-[20px]">{meridiemValue}</div>
+			<div class="text-[20px]">{editMeridiemValue}</div>
 			<button on:click={meridiemChange}>
 				<img src={chevronDown} alt="chevronDown_icon" />
 			</button>

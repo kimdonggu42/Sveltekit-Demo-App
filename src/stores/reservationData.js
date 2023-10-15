@@ -10,3 +10,15 @@ export const date = writable('');
 export const hour = writable(1);
 export const minute = writable(0);
 export const meridiem = writable('AM');
+
+
+export const editName = writable('');
+export const editPhone = writable('');
+export const editGuests = writable(0);
+export const editTables = writable([]);
+export const editNote = writable('');
+
+export const editDate = writable('');
+export const editHour = writable(1);
+export const editMinute = writable(0);
+export const editMeridiem = writable('AM');

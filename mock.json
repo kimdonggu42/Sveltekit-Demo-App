@@ -1,33 +1,19 @@
 {
   "reservation": [
     {
-      "id": 1,
-      "name": "Jason",
-      "phone": "012-345-6789",
+      "id": 84690701,
+      "name": "수정 김동구",
+      "phone": "수정 010-9039-7962",
       "date": "May 10",
       "hour": 2,
-      "minute": 0,
-      "meridiem": "PM",
-      "guests": 4,
-      "table": [
-        "Table 7 ⋅ Floor 1"
-      ],
-      "note": "Note",
-      "seated": false
-    },
-    {
-      "id": 42517451,
-      "name": "sdf",
-      "phone": "asdf",
-      "date": "June 20",
-      "hour": 3,
       "minute": 1,
       "meridiem": "PM",
       "guests": 2,
       "table": [
+        "Table 7 ⋅ Floor 1",
         "Table 8 ⋅ Floor 1"
       ],
-      "note": "asDfsad",
+      "note": "수정 메모",
       "seated": false
     }
   ]
