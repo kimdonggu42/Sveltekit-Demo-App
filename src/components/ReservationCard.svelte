@@ -12,14 +12,6 @@
 		return table.split('Table')[1].trim();
 	};
 
-	const renameTime = (time) => {
-		if (String(time).length === 1) {
-			return String(time).padStart(2, '0');
-		} else {
-			return time;
-		}
-	};
-
 	const handlePatchSeated = async (reservationId, seatedState) => {
 		const newSeated = {
 			seated: seatedState ? false : true
@@ -46,7 +38,7 @@
 		<div class="flex items-center gap-x-[7px]">
 			<img src={eventIcon} alt="event_icon" />
 			<div>
-				{reservation.date}, {renameTime(reservation.hour)}:{renameTime(reservation.minute)}
+				{reservation.date}, {reservation.hour}:{String(reservation.minute).padStart(2, '0')}
 				{reservation.meridiem}
 			</div>
 		</div>
