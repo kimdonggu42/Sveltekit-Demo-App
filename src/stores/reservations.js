@@ -15,6 +15,15 @@ const createReservationsStore = () => {
   };
   loadReservations();
 
+  const postReservation = async (newReservationData) => {
+    try {
+      await axios.post('http://localhost:3001/reservation', newReservationData);
+      await loadReservations();
+    } catch (error) {
+      console.error("예약 추가 중 오류가 발생했습니다.", error);
+    }
+  };
+
   const patchReservation = async (reservationId, updateSeated) => {
     try {
       await axios.patch(`http://localhost:3001/reservation/${reservationId}`, updateSeated);
@@ -35,6 +44,7 @@ const createReservationsStore = () => {
 
   return {
     subscribe,
+    postReservation,
     patchReservation,
     deleteReservation
   };

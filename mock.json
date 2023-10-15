@@ -1,56 +1,51 @@
 {
-	"reservation": [
-		{
-			"id": 1,
-			"name": "Jason",
-			"phone": "012-345-6789",
-			"date": "May 10",
-			"hour": 2,
-			"minute": 0,
-			"meridiem": "PM",
-			"guests": 4,
-			"table": ["Table 7 ⋅ Floor 1"],
-			"note": "Note",
-			"seated": false
-		},
-		{
-			"id": 2,
-			"name": "Jason",
-			"phone": "012-345-6789",
-			"date": "May 10",
-			"hour": 2,
-			"minute": 0,
-			"meridiem": "PM",
-			"guests": 4,
-			"table": ["Table 7 ⋅ Floor 1", "Table 8 ⋅ Floor 1"],
-			"note": "Note",
-			"seated": false
-		},
-		{
-			"id": 3,
-			"name": "Jason",
-			"phone": "012-345-6789",
-			"date": "May 10",
-			"hour": 2,
-			"minute": 0,
-			"meridiem": "PM",
-			"guests": 4,
-			"table": ["Table 7 ⋅ Floor 1"],
-			"note": "Note",
-			"seated": false
-		},
-		{
-			"id": 4,
-			"name": "Mary",
-			"phone": "012-345-6789",
-			"date": "May 10",
-			"hour": 2,
-			"minute": 0,
-			"meridiem": "PM",
-			"guests": 4,
-			"table": ["Table 7 ⋅ Floor 1", "Table 8 ⋅ Floor 1"],
-			"note": "Note",
-			"seated": false
-		}
-	]
+  "reservation": [
+    {
+      "id": 1,
+      "name": "Jason",
+      "phone": "012-345-6789",
+      "date": "May 10",
+      "hour": 2,
+      "minute": 0,
+      "meridiem": "PM",
+      "guests": 4,
+      "table": [
+        "Table 7 ⋅ Floor 1"
+      ],
+      "note": "Note",
+      "seated": false
+    },
+    {
+      "id": 2,
+      "name": "Jason",
+      "phone": "012-345-6789",
+      "date": "May 10",
+      "hour": 2,
+      "minute": 0,
+      "meridiem": "PM",
+      "guests": 4,
+      "table": [
+        "Table 7 ⋅ Floor 1",
+        "Table 8 ⋅ Floor 1"
+      ],
+      "note": "Note",
+      "seated": false
+    },
+    {
+      "id": 3,
+      "name": "Jason",
+      "phone": "012-345-6789",
+      "date": "May 10",
+      "hour": 2,
+      "minute": 0,
+      "meridiem": "PM",
+      "guests": 4,
+      "table": [
+        "Table 7 ⋅ Floor 1",
+        "Table 8 ⋅ Floor 1"
+      ],
+      "note": "Note",
+      "seated": false
+    }
+  ]
 }
