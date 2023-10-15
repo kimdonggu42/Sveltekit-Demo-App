@@ -53,7 +53,11 @@
 				<div>{reservation.guests}</div>
 			</div>
 			<div class="flex gap-x-[7px]">
-				<div class="text-[#6b6460]">Reserved Table</div>
+				{#if reservation.table.length !== 0}
+					<div class="text-[#6b6460]">Reserved Table</div>
+				{:else}
+					<div class="text-[#bcb5b3] italic">No Selected Table</div>
+				{/if}
 				<ul>
 					{#each reservation.table as table}
 						<li>{renameTable(table)}</li>
@@ -62,7 +66,9 @@
 			</div>
 			<div class="flex items-center gap-x-[7px]">
 				<div>{reservation.note}</div>
-				<img src={editIcon} alt="edit_icon" />
+				{#if reservation.note.length !== 0}
+					<img src={editIcon} alt="edit_icon" />
+				{/if}
 			</div>
 			<div class="flex items-center gap-x-[10px]">
 				<button
