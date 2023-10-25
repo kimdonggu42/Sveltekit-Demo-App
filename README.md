@@ -1,8 +1,3 @@
-## 지원자
-
-- 이름 : 김동구
-- 이메일 : kdonggoo44gmail.com
-
 ## 개발 환경
 
 ### Developement
